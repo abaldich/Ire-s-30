@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Regalo 1</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e0f2ff;
+      color: #034e78;
+      text-align: center;
+      padding: 20px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 5px;
+      border: 1px solid #007BFF;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #hint {
+      margin-top: 20px;
+      font-style: italic;
+      display: none;
+    }
+  </style>
+  <script>
+    let timer = 10;
+    function cuentaAtras() {
+      const timerSpan = document.getElementById('timer');
+      if(timer > 0) {
+        timerSpan.textContent = '00:' + (timer < 10 ? '0' + timer : timer);
+        timer--;
+        setTimeout(cuentaAtras, 1000);
+      } else {
+        timerSpan.textContent = '00:00';
+        document.getElementById('hint').style.display = 'block';
+      }
+    }
+    function checkPassword() {
+      const pass = document.getElementById('password').value;
+      if(pass === 'amor123') {
+        window.location.href = 'regalo1_contenido.html';
+      } else {
+        alert('Contraseña incorrecta');
+      }
+    }
+    window.onload = cuentaAtras;
+  </script>
+</head>
+<body>
+  <h2>Regalo 1</h2>
+  <p>Cuenta atrás: <span id="timer">00:10</span></p>
+  <p id="hint">Pista: Lo que llevas en el corazón</p>
+  <input type="text" id="password" placeholder="Introduce la contraseña" />
+  <br />
+  <button onclick="checkPassword()">Desbloquear</button>
+</body>
+</html>
