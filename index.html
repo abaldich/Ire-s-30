@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Ire's 30 + Amigo Invisible</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e0f2ff;
+      text-align: center;
+      color: #034e78;
+      margin-top: 15%;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 5px;
+      border: 1px solid #a8e6ff;
+    }
+    button {
+      background-color: #a8e6ff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    function verificarAcceso() {
+      const clave = document.getElementById("clave").value;
+      if (clave === "bebeperfecto") {
+        window.location.href = "menu.html";
+      } else {
+        alert("Contraseña incorrecta");
+      }
+    }
+  </script>
+</head>
+<body>
+  <h2>Introduce la contraseña para acceder, dos palabras que usaria yo para describir a luke juntas en minúsculas y sin espacios</h2>
+  <input type="password" id="clave" placeholder="Contraseña general" />
+  <br />
+  <button onclick="verificarAcceso()">Entrar</button>
+</body>
+</html>
