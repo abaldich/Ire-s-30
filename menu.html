@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Menú de Regalos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e0f2ff;
+      color: #034e78;
+      text-align: center;
+    }
+    h1 {
+      margin-top: 20px;
+    }
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      padding: 20px;
+    }
+    .grid a img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .grid a img:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <h1>Selecciona un Regalo</h1>
+  <div class="grid">
+    <!-- Ejemplo de 3 regalos, replica y cambia para los 40 -->
+    <a href="regalo1.html">
+      <img src="img/regalo1.jpg" alt="Regalo 1" />
+    </a>
+    <a href="regalo2.html">
+      <img src="img/regalo2.jpg" alt="Regalo 2" />
+    </a>
+    <a href="regalo3.html">
+      <img src="img/regalo3.jpg" alt="Regalo 3" />
+    </a>
+    <!-- Continúa aquí con más regalos hasta 40 -->
+  </div>
+</body>
+</html>
