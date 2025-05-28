@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -21,23 +21,27 @@
     .menu-container {
       position: relative;
       width: 100%;
-      max-width: 800px;
-      height: 800px;
+      max-width: 900px;
+      height: 900px;
       margin: 20px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     .centro {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 120px;
+      width: 140px;
       transform: translate(-50%, -50%);
       z-index: 10;
+      border-radius: 15px;
     }
 
     .explicacion {
       position: absolute;
-      top: 60%;
+      top: 65%;
       left: 50%;
       transform: translateX(-50%);
       width: 80%;
@@ -53,34 +57,52 @@
       transition: transform 0.3s ease;
       cursor: pointer;
       z-index: 5;
-      user-select: none;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
     }
 
     .regalo.activo {
       filter: none;
       z-index: 6;
+      box-shadow: 0 0 10px #003366;
     }
 
     .regalo:hover {
       transform: scale(1.1);
+      z-index: 15;
+      box-shadow: 0 0 20px #0055aa;
     }
 
+    /* Texto "aún no disponible" encima de la imagen */
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255,255,255,0.7);
+      color: #333;
+      font-weight: bold;
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Responsive */
     @media (max-width: 768px) {
       .menu-container {
-        height: 600px;
+        height: 700px;
       }
-
       .centro {
-        width: 80px;
+        width: 100px;
       }
-
-      .regalo {
-        max-width: 18vw !important;
-      }
-
       .explicacion {
         font-size: 0.9rem;
-        top: 65%;
+        top: 68%;
+      }
+      .regalo {
+        box-shadow: none;
       }
     }
   </style>
@@ -103,103 +125,116 @@
     const container = document.querySelector(".menu-container");
     const ahora = new Date();
 
-    // Fechas de desbloqueo que tú defines individualmente (puedes cambiar cada fecha)
+    // Fechas de desbloqueo asignadas individualmente (puedes cambiar aquí)
     const desbloqueos = {
-      r1: "2025-06-01",
-      r2: "2025-06-03",
-      r3: "2025-06-05",
-      r4: "2025-06-07",
-      r5: "2025-06-10",
-      r6: "2025-06-12",
-      r7: "2025-06-15",
-      r8: "2025-06-18",
-      r9: "2025-06-20",
-      r10: "2025-06-22",
-      r11: "2025-06-25",
-      r12: "2025-06-27",
-      r13: "2025-06-29",
-      r14: "2025-07-01",
-      r15: "2025-07-04",
-      r16: "2025-07-06",
-      r17: "2025-07-08",
-      r18: "2025-07-10",
-      r19: "2025-07-12",
-      r20: "2025-07-15",
-      r21: "2025-07-17",
-      r22: "2025-07-19",
-      r23: "2025-07-21",
-      r24: "2025-07-23",
-      r25: "2025-07-25",
-      r26: "2025-07-27",
-      r27: "2025-07-29",
-      r28: "2025-07-31",
-      r29: "2025-08-02",
-      r30: "2025-08-04",
-      r31: "2025-08-06",
-      r32: "2025-08-08",
-      r33: "2025-08-10",
-      r34: "2025-08-12",
-      r35: "2025-08-14",
-      r36: "2025-08-16",
-      r37: "2025-08-18",
-      r38: "2025-08-20",
-      r39: "2025-08-22",
-      r40: "2025-08-24"
+      r1:  "2025-06-01T00:00:00",
+      r2:  "2025-06-02T00:00:00",
+      r3:  "2025-06-03T00:00:00",
+      r4:  "2025-06-05T00:00:00",
+      r5:  "2025-06-07T00:00:00",
+      r6:  "2025-06-08T00:00:00",
+      r7:  "2025-06-10T00:00:00",
+      r8:  "2025-06-12T00:00:00",
+      r9:  "2025-06-14T00:00:00",
+      r10: "2025-06-15T00:00:00",
+      r11: "2025-06-16T00:00:00",
+      r12: "2025-06-17T00:00:00",
+      r13: "2025-06-18T00:00:00",
+      r14: "2025-06-19T00:00:00",
+      r15: "2025-06-20T00:00:00",
+      r16: "2025-06-21T00:00:00",
+      r17: "2025-06-22T00:00:00",
+      r18: "2025-06-23T00:00:00",
+      r19: "2025-06-24T00:00:00",
+      r20: "2025-06-25T00:00:00",
+      r21: "2025-06-26T00:00:00",
+      r22: "2025-06-27T00:00:00",
+      r23: "2025-06-28T00:00:00",
+      r24: "2025-06-29T00:00:00",
+      r25: "2025-06-30T00:00:00",
+      r26: "2025-07-01T00:00:00",
+      r27: "2025-07-02T00:00:00",
+      r28: "2025-07-03T00:00:00",
+      r29: "2025-07-04T00:00:00",
+      r30: "2025-07-05T00:00:00",
+      r31: "2025-07-06T00:00:00",
+      r32: "2025-07-07T00:00:00",
+      r33: "2025-07-08T00:00:00",
+      r34: "2025-07-09T00:00:00",
+      r35: "2025-07-10T00:00:00",
+      r36: "2025-07-11T00:00:00",
+      r37: "2025-07-12T00:00:00",
+      r38: "2025-07-13T00:00:00",
+      r39: "2025-07-14T00:00:00",
+      r40: "2025-07-15T00:00:00"
     };
 
-    // Definimos 3 anillos circulares con radios (en px) y cantidad de regalos por anillo
-    const anillos = [
-      { radio: 180, count: 12, size: 70 },
-      { radio: 280, count: 14, size: 90 },
-      { radio: 380, count: 14, size: 110 }
-    ];
+    // Posiciones fijas para 40 regalos: 8 columnas x 5 filas en porcentajes para que se vea bien y no se superpongan
+    // Ajusta los tamaños para que haya espacio suficiente entre imágenes
+    const posiciones = {};
+    const filas = 5;
+    const columnas = 8;
+    const baseTop = 5;    // porcentaje desde arriba donde empiezan las filas
+    const baseLeft = 5;   // porcentaje desde la izquierda donde empiezan las columnas
+    const espacioV = 18;  // espacio vertical entre filas (%)
+    const espacioH = 11;  // espacio horizontal entre columnas (%)
+    // Tamaños variados de imagen (entre 60 y 90 px)
+    const tamaños = [60, 70, 80, 90];
 
-    // Cálculo de centro del container en px
-    const contRect = container.getBoundingClientRect();
-    const centerX = contRect.width / 2;
-    const centerY = contRect.height / 2;
-
-    let regaloIndex = 1;
-
-    for (const anillo of anillos) {
-      for (let i = 0; i < anillo.count; i++) {
-        if (regaloIndex > 40) break;
-
-        const id = "r" + regaloIndex;
-        const fecha = new Date(desbloqueos[id]);
-        const activo = ahora >= fecha;
-
-        // Ángulo para repartir regalos uniformemente
-        const angle = (2 * Math.PI / anillo.count) * i - Math.PI / 2; // -90° para empezar arriba
-
-        // Posición absoluta con corrección para centrar la imagen según tamaño
-        const size = anillo.size;
-        const x = centerX + anillo.radio * Math.cos(angle) - size / 2;
-        const y = centerY + anillo.radio * Math.sin(angle) - size / 2;
-
-        // Crear el enlace y la imagen
-        const enlace = document.createElement("a");
-        enlace.href = activo ? `regalo${regaloIndex}.html` : "#";
-        enlace.addEventListener("click", e => {
-          if (!activo) {
-            e.preventDefault();
-            alert("🎁 Este regalo aún no está disponible.");
-          }
-        });
-
-        const img = document.createElement("img");
-        img.src = `img/regalo${regaloIndex}.png`;
-        img.id = id;
-        img.className = "regalo" + (activo ? " activo" : "");
-        img.style.width = size + "px";
-        img.style.top = y + "px";
-        img.style.left = x + "px";
-
-        enlace.appendChild(img);
-        container.appendChild(enlace);
-
-        regaloIndex++;
+    let contador = 1;
+    for (let fila = 0; fila < filas; fila++) {
+      for (let col = 0; col < columnas; col++) {
+        if (contador > 40) break;
+        posiciones["r" + contador] = {
+          top: baseTop + fila * espacioV,
+          left: baseLeft + col * espacioH,
+          width: tamaños[(contador-1) % tamaños.length]
+        };
+        contador++;
       }
+    }
+
+    // Generar regalos
+    for (let i = 1; i <= 40; i++) {
+      const id = "r" + i;
+      const ruta = `img/regalo${i}.jpg`;
+      const fecha = new Date(desbloqueos[id]);
+      const activo = ahora >= fecha;
+      const { top, left, width } = posiciones[id];
+
+      const enlace = document.createElement("a");
+      enlace.href = activo ? `regalo${i}.html` : "#";
+      enlace.style.position = "absolute";
+      enlace.style.top = top + "%";
+      enlace.style.left = left + "%";
+      enlace.style.width = width + "px";
+      enlace.style.height = "auto";
+      enlace.style.display = "block";
+
+      enlace.addEventListener("click", (e) => {
+        if (!activo) {
+          e.preventDefault();
+          alert("🎁 Este regalo aún no está disponible.");
+        }
+      });
+
+      const img = document.createElement("img");
+      img.src = ruta;
+      img.id = id;
+      img.className = "regalo" + (activo ? " activo" : "");
+      img.style.width = "100%";
+      img.style.height = "auto";
+
+      enlace.appendChild(img);
+
+      if (!activo) {
+        const overlay = document.createElement("div");
+        overlay.className = "overlay";
+        overlay.textContent = "No disponible";
+        enlace.appendChild(overlay);
+      }
+
+      container.appendChild(enlace);
     }
   </script>
 
