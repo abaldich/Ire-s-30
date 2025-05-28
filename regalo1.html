@@ -1,65 +1,119 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Regalo 1</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #e0f2ff;
-      color: #034e78;
-      text-align: center;
+      font-family: sans-serif;
+      background-color: #e6f0ff;
+      color: #003366;
       padding: 20px;
+      text-align: center;
     }
-    input, button {
-      padding: 10px;
-      margin: 10px;
-      border-radius: 5px;
-      border: 1px solid #007BFF;
-    }
-    button {
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    #hint {
+
+    .temporizador {
+      font-size: 1.5em;
       margin-top: 20px;
-      font-style: italic;
+    }
+
+    .pista, .contenido {
+      margin-top: 20px;
       display: none;
     }
+
+    input, button {
+      font-size: 1.2em;
+      padding: 10px;
+      margin: 10px;
+    }
+
+    .acceso {
+      margin-top: 30px;
+    }
+
+    .contenido {
+      border: 2px dashed #003366;
+      padding: 20px;
+      background: white;
+    }
+
+    @media (max-width: 600px) {
+      .temporizador {
+        font-size: 1.2em;
+      }
+
+      input, button {
+        font-size: 1em;
+        padding: 8px;
+      }
+    }
   </style>
-  <script>
-    let timer = 10;
-    function cuentaAtras() {
-      const timerSpan = document.getElementById('timer');
-      if(timer > 0) {
-        timerSpan.textContent = '00:' + (timer < 10 ? '0' + timer : timer);
-        timer--;
-        setTimeout(cuentaAtras, 1000);
-      } else {
-        timerSpan.textContent = '00:00';
-        document.getElementById('hint').style.display = 'block';
-      }
-    }
-    function checkPassword() {
-      const pass = document.getElementById('password').value;
-      if(pass === 'amor123') {
-        window.location.href = 'regalo1_contenido.html';
-      } else {
-        alert('Contraseña incorrecta');
-      }
-    }
-    window.onload = cuentaAtras;
-  </script>
 </head>
 <body>
-  <h2>Regalo 1</h2>
-  <p>Cuenta atrás: <span id="timer">00:10</span></p>
-  <p id="hint">Pista: Lo que llevas en el corazón</p>
-  <input type="text" id="password" placeholder="Introduce la contraseña" />
-  <br />
-  <button onclick="checkPassword()">Desbloquear</button>
+
+  <h1>🎁 Regalo 1</h1>
+
+  <div class="temporizador" id="temporizador">Cargando...</div>
+
+  <div class="pista" id="pista">🔐 Pista: Está relacionado con tu color favorito 💙</div>
+
+  <div class="acceso" id="acceso" style="display:none;">
+    <p>Introduce la contraseña para desbloquear tu regalo:</p>
+    <input type="password" id="password" placeholder="Contraseña" />
+    <button onclick="verificar()">Entrar</button>
+    <p id="error" style="color:red;"></p>
+  </div>
+
+  <div class="contenido" id="contenido">
+    <h2>¡Felicidades! 🎉</h2>
+    <p>Este es tu regalo especial: una tarde entera de cine y palomitas 🍿🎬</p>
+    <!-- Puedes añadir imagenes, enlaces o lo que quieras -->
+  </div>
+
+  <script>
+    const fechaObjetivo = new Date("2025-05-18T00:00:00"); // ← CAMBIA ESTA FECHA
+    const contraseña = "azul123"; // ← CAMBIA ESTA CONTRASEÑA
+
+    const temporizador = document.getElementById("temporizador");
+    const pista = document.getElementById("pista");
+    const acceso = document.getElementById("acceso");
+    const contenido = document.getElementById("contenido");
+    const error = document.getElementById("error");
+
+    function actualizarCuenta() {
+      const ahora = new Date();
+      const diferencia = fechaObjetivo - ahora;
+
+      if (diferencia <= 0) {
+        temporizador.innerText = "✅ ¡El regalo está desbloqueado!";
+        pista.style.display = "block";
+        acceso.style.display = "block";
+        clearInterval(intervalo);
+      } else {
+        const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+        const minutos = Math.floor((diferencia / (1000 * 60)) % 60);
+        const segundos = Math.floor((diferencia / 1000) % 60);
+
+        temporizador.innerText = `⏳ Faltan ${dias}d ${horas}h ${minutos}m ${segundos}s`;
+      }
+    }
+
+    function verificar() {
+      const input = document.getElementById("password").value;
+      if (input === contraseña) {
+        acceso.style.display = "none";
+        contenido.style.display = "block";
+      } else {
+        error.innerText = "❌ Contraseña incorrecta. Intenta de nuevo.";
+      }
+    }
+
+    const intervalo = setInterval(actualizarCuenta, 1000);
+    actualizarCuenta();
+  </script>
+
 </body>
 </html>
