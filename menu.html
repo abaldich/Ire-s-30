@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Menú de Regalos</title>
   <style>
     body {
@@ -15,93 +15,127 @@
 
     h1 {
       color: #003366;
-      margin-top: 20px;
-      margin-bottom: 5px;
+      margin: 20px 0 10px 0;
     }
 
-    /* Contenedor del centro decorativo y explicación */
     .header-container {
-      margin: 20px auto;
-      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 0 10px;
     }
 
     .centro {
-      width: 140px;
-      border-radius: 15px;
-      margin: 0 auto 10px auto;
-      display: block;
+      width: 120px;
+      max-width: 100%;
     }
 
     .explicacion {
+      max-width: 800px;
       color: #003366;
       font-size: 1rem;
-      max-width: 600px;
-      margin: 0 auto 30px auto;
-      line-height: 1.3em;
+      margin-top: 8px;
     }
 
     .menu-container {
       position: relative;
       width: 100%;
-      max-width: 900px;
-      height: 900px;
+      max-width: 800px;
+      height: 650px;
       margin: 0 auto 40px auto;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      gap: 8px 8px;
+      padding: 0 10px;
     }
 
     .regalo {
-      position: absolute;
       border-radius: 10px;
       filter: grayscale(100%);
-      transition: transform 0.3s ease;
+      transition: filter 0.3s ease, transform 0.3s ease;
       cursor: pointer;
-      z-index: 5;
-      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+      justify-self: center;
+      align-self: center;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+      user-select: none;
     }
 
     .regalo.activo {
       filter: none;
       z-index: 6;
-      box-shadow: 0 0 10px #003366;
     }
 
     .regalo:hover {
       transform: scale(1.1);
-      z-index: 15;
-      box-shadow: 0 0 20px #0055aa;
     }
 
-    .overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(255,255,255,0.7);
-      color: #333;
-      font-weight: bold;
-      font-size: 0.8rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 10px;
-      pointer-events: none;
-      user-select: none;
-    }
+    /* Posiciones fijas usando grid-area para no superponer */
+    #r1  { grid-area: 1 / 1 / 2 / 2; width: 70px; }
+    #r2  { grid-area: 1 / 3 / 2 / 4; width: 80px; }
+    #r3  { grid-area: 1 / 5 / 2 / 6; width: 60px; }
+    #r4  { grid-area: 1 / 7 / 2 / 8; width: 85px; }
+    #r5  { grid-area: 2 / 1 / 3 / 2; width: 65px; }
+    #r6  { grid-area: 2 / 3 / 3 / 4; width: 90px; }
+    #r7  { grid-area: 2 / 5 / 3 / 6; width: 75px; }
+    #r8  { grid-area: 2 / 7 / 3 / 8; width: 60px; }
+    #r9  { grid-area: 3 / 1 / 4 / 2; width: 100px; }
+    #r10 { grid-area: 3 / 3 / 4 / 4; width: 90px; }
+    #r11 { grid-area: 3 / 5 / 4 / 6; width: 65px; }
+    #r12 { grid-area: 3 / 7 / 4 / 8; width: 75px; }
+    #r13 { grid-area: 4 / 1 / 5 / 2; width: 60px; }
+    #r14 { grid-area: 4 / 3 / 5 / 4; width: 80px; }
+    #r15 { grid-area: 4 / 5 / 5 / 6; width: 85px; }
+    #r16 { grid-area: 4 / 7 / 5 / 8; width: 70px; }
+    #r17 { grid-area: 5 / 1 / 6 / 2; width: 60px; }
+    #r18 { grid-area: 5 / 3 / 6 / 4; width: 95px; }
+    #r19 { grid-area: 5 / 5 / 6 / 6; width: 65px; }
+    #r20 { grid-area: 5 / 7 / 6 / 8; width: 70px; }
+    #r21 { grid-area: 1 / 2 / 2 / 3; width: 80px; }
+    #r22 { grid-area: 1 / 4 / 2 / 5; width: 60px; }
+    #r23 { grid-area: 1 / 6 / 2 / 7; width: 75px; }
+    #r24 { grid-area: 1 / 8 / 2 / 9; width: 65px; }
+    #r25 { grid-area: 2 / 2 / 3 / 3; width: 90px; }
+    #r26 { grid-area: 2 / 4 / 3 / 5; width: 100px; }
+    #r27 { grid-area: 2 / 6 / 3 / 7; width: 85px; }
+    #r28 { grid-area: 2 / 8 / 3 / 9; width: 70px; }
+    #r29 { grid-area: 3 / 2 / 4 / 3; width: 60px; }
+    #r30 { grid-area: 3 / 4 / 4 / 5; width: 95px; }
+    #r31 { grid-area: 3 / 6 / 4 / 7; width: 65px; }
+    #r32 { grid-area: 3 / 8 / 4 / 9; width: 70px; }
+    #r33 { grid-area: 4 / 2 / 5 / 3; width: 75px; }
+    #r34 { grid-area: 4 / 4 / 5 / 5; width: 85px; }
+    #r35 { grid-area: 4 / 6 / 5 / 7; width: 90px; }
+    #r36 { grid-area: 4 / 8 / 5 / 9; width: 60px; }
+    #r37 { grid-area: 5 / 2 / 6 / 3; width: 100px; }
+    #r38 { grid-area: 5 / 4 / 6 / 5; width: 70px; }
+    #r39 { grid-area: 5 / 6 / 6 / 7; width: 65px; }
+    #r40 { grid-area: 5 / 8 / 6 / 9; width: 80px; }
 
     @media (max-width: 768px) {
       .menu-container {
-        height: 700px;
+        height: auto;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(8, 1fr);
+        gap: 6px 6px;
+      }
+      #r1, #r2, #r3, #r4, #r5, #r6, #r7, #r8, #r9, #r10,
+      #r11, #r12, #r13, #r14, #r15, #r16, #r17, #r18, #r19, #r20,
+      #r21, #r22, #r23, #r24, #r25, #r26, #r27, #r28, #r29, #r30,
+      #r31, #r32, #r33, #r34, #r35, #r36, #r37, #r38, #r39, #r40 {
+        width: 60px !important;
+        grid-area: auto !important;
+        max-width: 100%;
       }
       .centro {
-        width: 100px;
+        width: 80px;
       }
       .explicacion {
         font-size: 0.9rem;
-        max-width: 90%;
-      }
-      .regalo {
-        box-shadow: none;
       }
     }
   </style>
@@ -111,72 +145,37 @@
   <h1>Elige tu regalo</h1>
 
   <div class="header-container">
-    <!-- Imagen central fuera del grid -->
     <img src="img/centro.png" alt="Centro decorativo" class="centro" />
-    <!-- Texto explicativo fuera del grid -->
     <div class="explicacion">
       Toca un regalo para desbloquearlo en su día. Algunos aún no están disponibles. ¡Paciencia!
     </div>
   </div>
 
-  <div class="menu-container">
-    <!-- Aquí se colocarán los regalos -->
-  </div>
+  <div class="menu-container"></div>
 
   <script>
     const container = document.querySelector(".menu-container");
     const ahora = new Date();
 
-    // Fechas de desbloqueo ejemplo
+    // Fechas de desbloqueo por día consecutivo desde hoy
     const desbloqueos = {};
-    for(let i=1; i<=40; i++) {
-      let fecha = new Date();
+    for (let i = 1; i <= 40; i++) {
+      const fecha = new Date();
       fecha.setDate(fecha.getDate() + i - 1);
-      desbloqueos["r"+i] = fecha.toISOString();
+      desbloqueos["r" + i] = fecha;
     }
 
-    // Posiciones fijas para 40 regalos: 8 columnas x 5 filas
-    const posiciones = {};
-    const filas = 5;
-    const columnas = 8;
-    const baseTop = 5;    // % desde arriba
-    const baseLeft = 5;   // % desde izquierda
-    const espacioV = 18;  // espacio vertical (%)
-    const espacioH = 11;  // espacio horizontal (%)
-    const tamaños = [60, 70, 80, 90];
-
-    let contador = 1;
-    for(let fila=0; fila<filas; fila++) {
-      for(let col=0; col<columnas; col++) {
-        if(contador > 40) break;
-        posiciones["r"+contador] = {
-          top: baseTop + fila * espacioV,
-          left: baseLeft + col * espacioH,
-          width: tamaños[(contador-1) % tamaños.length]
-        };
-        contador++;
-      }
-    }
-
-    // Crear regalos
-    for(let i=1; i<=40; i++) {
+    // Creamos los regalos
+    for (let i = 1; i <= 40; i++) {
       const id = "r" + i;
       const ruta = `img/regalo${i}.jpg`;
-      const fecha = new Date(desbloqueos[id]);
+      const fecha = desbloqueos[id];
       const activo = ahora >= fecha;
-      const { top, left, width } = posiciones[id];
 
       const enlace = document.createElement("a");
       enlace.href = activo ? `regalo${i}.html` : "#";
-      enlace.style.position = "absolute";
-      enlace.style.top = top + "%";
-      enlace.style.left = left + "%";
-      enlace.style.width = width + "px";
-      enlace.style.height = "auto";
-      enlace.style.display = "block";
-
       enlace.addEventListener("click", (e) => {
-        if(!activo) {
+        if (!activo) {
           e.preventDefault();
           alert("🎁 Este regalo aún no está disponible.");
         }
@@ -186,18 +185,7 @@
       img.src = ruta;
       img.id = id;
       img.className = "regalo" + (activo ? " activo" : "");
-      img.style.width = "100%";
-      img.style.height = "auto";
-
       enlace.appendChild(img);
-
-      if(!activo) {
-        const overlay = document.createElement("div");
-        overlay.className = "overlay";
-        overlay.textContent = "No disponible";
-        enlace.appendChild(overlay);
-      }
-
       container.appendChild(enlace);
     }
   </script>
