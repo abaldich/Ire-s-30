@@ -16,6 +16,28 @@
     h1 {
       color: #003366;
       margin-top: 20px;
+      margin-bottom: 5px;
+    }
+
+    /* Contenedor del centro decorativo y explicación */
+    .header-container {
+      margin: 20px auto;
+      max-width: 900px;
+    }
+
+    .centro {
+      width: 140px;
+      border-radius: 15px;
+      margin: 0 auto 10px auto;
+      display: block;
+    }
+
+    .explicacion {
+      color: #003366;
+      font-size: 1rem;
+      max-width: 600px;
+      margin: 0 auto 30px auto;
+      line-height: 1.3em;
     }
 
     .menu-container {
@@ -23,31 +45,10 @@
       width: 100%;
       max-width: 900px;
       height: 900px;
-      margin: 20px auto;
+      margin: 0 auto 40px auto;
       background: #fff;
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    .centro {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 140px;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-      border-radius: 15px;
-    }
-
-    .explicacion {
-      position: absolute;
-      top: 65%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80%;
-      color: #003366;
-      font-size: 1rem;
-      z-index: 9;
     }
 
     .regalo {
@@ -72,7 +73,6 @@
       box-shadow: 0 0 20px #0055aa;
     }
 
-    /* Texto "aún no disponible" encima de la imagen */
     .overlay {
       position: absolute;
       top: 0; left: 0;
@@ -89,7 +89,6 @@
       user-select: none;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
       .menu-container {
         height: 700px;
@@ -99,7 +98,7 @@
       }
       .explicacion {
         font-size: 0.9rem;
-        top: 68%;
+        max-width: 90%;
       }
       .regalo {
         box-shadow: none;
@@ -111,81 +110,46 @@
 
   <h1>Elige tu regalo</h1>
 
-  <div class="menu-container">
-    <!-- Imagen central -->
+  <div class="header-container">
+    <!-- Imagen central fuera del grid -->
     <img src="img/centro.png" alt="Centro decorativo" class="centro" />
-
-    <!-- Texto explicativo central -->
+    <!-- Texto explicativo fuera del grid -->
     <div class="explicacion">
       Toca un regalo para desbloquearlo en su día. Algunos aún no están disponibles. ¡Paciencia!
     </div>
+  </div>
+
+  <div class="menu-container">
+    <!-- Aquí se colocarán los regalos -->
   </div>
 
   <script>
     const container = document.querySelector(".menu-container");
     const ahora = new Date();
 
-    // Fechas de desbloqueo asignadas individualmente (puedes cambiar aquí)
-    const desbloqueos = {
-      r1:  "2025-06-01T00:00:00",
-      r2:  "2025-06-02T00:00:00",
-      r3:  "2025-06-03T00:00:00",
-      r4:  "2025-06-05T00:00:00",
-      r5:  "2025-06-07T00:00:00",
-      r6:  "2025-06-08T00:00:00",
-      r7:  "2025-06-10T00:00:00",
-      r8:  "2025-06-12T00:00:00",
-      r9:  "2025-06-14T00:00:00",
-      r10: "2025-06-15T00:00:00",
-      r11: "2025-06-16T00:00:00",
-      r12: "2025-06-17T00:00:00",
-      r13: "2025-06-18T00:00:00",
-      r14: "2025-06-19T00:00:00",
-      r15: "2025-06-20T00:00:00",
-      r16: "2025-06-21T00:00:00",
-      r17: "2025-06-22T00:00:00",
-      r18: "2025-06-23T00:00:00",
-      r19: "2025-06-24T00:00:00",
-      r20: "2025-06-25T00:00:00",
-      r21: "2025-06-26T00:00:00",
-      r22: "2025-06-27T00:00:00",
-      r23: "2025-06-28T00:00:00",
-      r24: "2025-06-29T00:00:00",
-      r25: "2025-06-30T00:00:00",
-      r26: "2025-07-01T00:00:00",
-      r27: "2025-07-02T00:00:00",
-      r28: "2025-07-03T00:00:00",
-      r29: "2025-07-04T00:00:00",
-      r30: "2025-07-05T00:00:00",
-      r31: "2025-07-06T00:00:00",
-      r32: "2025-07-07T00:00:00",
-      r33: "2025-07-08T00:00:00",
-      r34: "2025-07-09T00:00:00",
-      r35: "2025-07-10T00:00:00",
-      r36: "2025-07-11T00:00:00",
-      r37: "2025-07-12T00:00:00",
-      r38: "2025-07-13T00:00:00",
-      r39: "2025-07-14T00:00:00",
-      r40: "2025-07-15T00:00:00"
-    };
+    // Fechas de desbloqueo ejemplo
+    const desbloqueos = {};
+    for(let i=1; i<=40; i++) {
+      let fecha = new Date();
+      fecha.setDate(fecha.getDate() + i - 1);
+      desbloqueos["r"+i] = fecha.toISOString();
+    }
 
-    // Posiciones fijas para 40 regalos: 8 columnas x 5 filas en porcentajes para que se vea bien y no se superpongan
-    // Ajusta los tamaños para que haya espacio suficiente entre imágenes
+    // Posiciones fijas para 40 regalos: 8 columnas x 5 filas
     const posiciones = {};
     const filas = 5;
     const columnas = 8;
-    const baseTop = 5;    // porcentaje desde arriba donde empiezan las filas
-    const baseLeft = 5;   // porcentaje desde la izquierda donde empiezan las columnas
-    const espacioV = 18;  // espacio vertical entre filas (%)
-    const espacioH = 11;  // espacio horizontal entre columnas (%)
-    // Tamaños variados de imagen (entre 60 y 90 px)
+    const baseTop = 5;    // % desde arriba
+    const baseLeft = 5;   // % desde izquierda
+    const espacioV = 18;  // espacio vertical (%)
+    const espacioH = 11;  // espacio horizontal (%)
     const tamaños = [60, 70, 80, 90];
 
     let contador = 1;
-    for (let fila = 0; fila < filas; fila++) {
-      for (let col = 0; col < columnas; col++) {
-        if (contador > 40) break;
-        posiciones["r" + contador] = {
+    for(let fila=0; fila<filas; fila++) {
+      for(let col=0; col<columnas; col++) {
+        if(contador > 40) break;
+        posiciones["r"+contador] = {
           top: baseTop + fila * espacioV,
           left: baseLeft + col * espacioH,
           width: tamaños[(contador-1) % tamaños.length]
@@ -194,10 +158,10 @@
       }
     }
 
-    // Generar regalos
-    for (let i = 1; i <= 40; i++) {
+    // Crear regalos
+    for(let i=1; i<=40; i++) {
       const id = "r" + i;
-      const ruta = `img/regalo${i}.png`;
+      const ruta = `img/regalo${i}.jpg`;
       const fecha = new Date(desbloqueos[id]);
       const activo = ahora >= fecha;
       const { top, left, width } = posiciones[id];
@@ -212,7 +176,7 @@
       enlace.style.display = "block";
 
       enlace.addEventListener("click", (e) => {
-        if (!activo) {
+        if(!activo) {
           e.preventDefault();
           alert("🎁 Este regalo aún no está disponible.");
         }
@@ -227,7 +191,7 @@
 
       enlace.appendChild(img);
 
-      if (!activo) {
+      if(!activo) {
         const overlay = document.createElement("div");
         overlay.className = "overlay";
         overlay.textContent = "No disponible";
