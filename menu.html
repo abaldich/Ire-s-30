@@ -205,8 +205,9 @@
     for (let i = 1; i <= 40; i++) {
       const id = "r" + i;
       const ruta = `img/regalo${i}.png`;
-      const fecha = desbloqueos[id];
-      const activo = ahora >= fecha;
+     const fecha = desbloqueos[id];
+     const fechaDesbloqueo = new Date(fecha);
+     const activo = ahora >= fechaDesbloqueo;
 
       const enlace = document.createElement("a");
       enlace.href = activo ? `regalo${i}.html` : "#";
